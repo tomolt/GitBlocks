@@ -216,7 +216,7 @@ void GitBlocks::Status(wxCommandEvent &event)
 	wxExecute(command, output);
 	wxSetWorkingDirectory(ocwd);
 	
-	cbEditor *editor = Manager::Get()->GetEditorManager()->New(_T("GitBlocksLog"));
+	cbEditor *editor = Manager::Get()->GetEditorManager()->New(_T("GitBlocksStatus"));
 	cbStyledTextCtrl *ctrl = editor->GetControl();
 	
 	for(unsigned int i=0;i<output.size();i++)
