@@ -1,4 +1,4 @@
-/***************************************************************
+/**************************************************************
 * Name:      GitBlocks
 * Purpose:   Code::Blocks plugin
 * Author:    Thomas Oltmann (thomas.oltmann.hhg@gmail.com)
