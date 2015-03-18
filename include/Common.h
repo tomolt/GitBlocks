@@ -1,0 +1,41 @@
+#ifndef COMMON_H
+#define COMMON_H
+
+#include <wx/wxprec.h>
+
+#ifndef WX_PRECOMP
+#include <wx/wx.h>
+#endif
+
+enum IDs
+{
+	ID_MENU_GITBLOCKS = wxID_HIGHEST + 8000,
+    ID_MENU_CREATE_EMPTY,
+    ID_MENU_CLONE,
+    ID_MENU_DESTROY,
+    ID_MENU_COMMIT,
+    ID_MENU_PUSH,
+    ID_MENU_PULL,
+    ID_MENU_LOG,
+    ID_MENU_STATUS,
+    
+    ID_COMD,
+    ID_COMD_FILE_CHOICE,
+    ID_COMD_COMT_LABEL,
+    ID_COMD_COMT_LINE,
+    ID_COMD_CC_COMMIT,
+    ID_COMD_CC_CANCEL,
+    
+    ID_CLOD,
+    ID_CLOD_ORIGIN_LABEL,
+    ID_CLOD_ORIGIN_LINE,
+    ID_CLOD_DIRECTORY_LABEL,
+    ID_CLOD_DIRECTORY_LINE,
+    ID_CLOD_DIRECTORY_BUTTON,
+    
+    ID_CFG_GIT_LABEL,
+	ID_CFG_GIT_LINE,
+	ID_CFG_GIT_BROWSE
+};
+
+#endif // COMMON_H

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_plugin_manifest_file>
+    <SdkVersion major="1" minor="19"  release="0" />
+    <Plugin name="GitBlocks">
+        <Value title="GitBlocks" />
+        <Value version="0.1" />
+        <Value description="Git integration for C::B (finally!)" />
+        <Value author="Thomas Oltmann" />
+        <Value authorEmail="tomolt@users.sourceforge.net" />
+        <Value authorWebsite="" />
+        <Value thanksTo="The C::B team for creating this awesome IDE!" />
+        <Value license="GPL3" />
+    </Plugin>
+</CodeBlocks_plugin_manifest_file>

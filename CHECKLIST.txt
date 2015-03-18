@@ -1,0 +1,21 @@
+add        Done!
+bisect     
+branch     Next
+checkout   
+clone      Done!
+commit     Done!
+diff       Next
+fetch      
+grep       
+init       Done!
+log        Done!
+merge      
+mv         Next
+pull       Next
+push       Next
+rebase     
+reset      
+rm         Next
+show       
+status     Done!
+tag        
