@@ -130,6 +130,8 @@ private:
 	void Commit(wxCommandEvent &event);
 	void Push(wxCommandEvent &event);
 	
+	void DiffToIndex(wxCommandEvent &event);
+	
 	void Log(wxCommandEvent &event);
 	void Status(wxCommandEvent &event);
 	

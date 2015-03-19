@@ -79,6 +79,7 @@ void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 	wxMenuItem *itemDestroy = new wxMenuItem(submenu, ID_MENU_DESTROY, _("&Destroy the repository"), _("Destroy the repository"));
 	wxMenuItem *itemCommit = new wxMenuItem(submenu, ID_MENU_COMMIT, _("&Commit"), _("Commit"));
 	wxMenuItem *itemPush = new wxMenuItem(submenu, ID_MENU_PUSH, _("&Push master to origin"), _("Push master to origin"));
+	wxMenuItem *itemDiffToIndex = new wxMenuItem(submenu, ID_MENU_DIFF_TO_INDEX, _("&Diff to index"), _("Diff to index"));
 	wxMenuItem *itemLog = new wxMenuItem(submenu, ID_MENU_LOG, _("&Show log"), _("Show log"));
 	wxMenuItem *itemStatus = new wxMenuItem(submenu, ID_MENU_STATUS, _("&Show status"), _("Show status"));
 	
@@ -89,6 +90,7 @@ void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 	submenu->Append(itemCommit);
 	submenu->Append(itemPush);
 	submenu->AppendSeparator();
+	submenu->Append(itemDiffToIndex);
 	submenu->Append(itemLog);
 	submenu->Append(itemStatus);
 	
@@ -99,6 +101,7 @@ void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 	Connect(ID_MENU_DESTROY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Destroy));
 	Connect(ID_MENU_COMMIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Commit));
 	Connect(ID_MENU_PUSH, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Push));
+	Connect(ID_MENU_DIFF_TO_INDEX, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::DiffToIndex));
 	Connect(ID_MENU_LOG, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Log));
 	Connect(ID_MENU_STATUS, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Status));
 }
@@ -173,6 +176,31 @@ void GitBlocks::Push(wxCommandEvent &event)
 {
 	wxString command = git + _T(" push origin master");
 	Execute(command, _T("Pushing master to origin ..."));
+}
+
+void GitBlocks::DiffToIndex(wxCommandEvent &event)
+{
+	wxString command = git + _T(" diff");
+	wxString comment = _T("Fetching diff to index ...");
+	wxString dir = Manager::Get()->GetProjectManager()->GetActiveProject()->GetBasePath();
+	
+	wxArrayString output;
+	
+	Manager::Get()->GetLogManager()->Log(comment, logSlot);
+	Manager::Get()->GetLogManager()->Log(command, logSlot);
+	
+	wxString ocwd = wxGetCwd();
+	wxSetWorkingDirectory(dir);
+	wxExecute(command, output);
+	wxSetWorkingDirectory(ocwd);
+	
+	cbEditor *editor = Manager::Get()->GetEditorManager()->New(_T("GitBlocks: Diff to index"));
+	cbStyledTextCtrl *ctrl = editor->GetControl();
+	
+	for(unsigned int i=0;i<output.size();i++)
+		ctrl->AppendText(output[i] + _T("\n"));
+	
+	editor->SetModified(false);
 }
 
 void GitBlocks::Log(wxCommandEvent &event)
