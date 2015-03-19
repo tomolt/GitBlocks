@@ -14,6 +14,9 @@ public:
 private:
 	wxTextCtrl *originLine;
 	wxTextCtrl *directoryLine;
+	
+	void OnCommit(wxCommandEvent &event);
+	void OnCancel(wxCommandEvent &event);
 };
 
 #endif // CLONEDIALOG_H
