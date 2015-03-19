@@ -31,8 +31,8 @@ CloneDialog::CloneDialog(wxWindow *parent) : wxDialog(parent, ID_CLOD, _T("Clone
 	wxBoxSizer *ccSizer = new wxBoxSizer(wxHORIZONTAL);
 	clodSizer->Add(ccSizer, 0);
 	
-	wxButton *ccCommit = new wxButton(this, ID_CLOD_CC_CLONE, _T("Clone"));
-	ccSizer->Add(ccCommit, wxEXPAND);
+	wxButton *ccClone = new wxButton(this, ID_CLOD_CC_CLONE, _T("Clone"));
+	ccSizer->Add(ccClone, wxEXPAND);
 	
 	wxButton *ccCancel = new wxButton(this, ID_CLOD_CC_CANCEL, _T("Cancel"));
 	ccSizer->Add(ccCancel, wxEXPAND);
