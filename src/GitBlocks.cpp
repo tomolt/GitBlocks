@@ -74,7 +74,7 @@ void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 {
 	wxMenu *submenu = new wxMenu();
 	
-	wxMenuItem *itemCreateEmpty = new wxMenuItem(submenu, ID_MENU_CREATE_EMPTY, _("Create an &empty repository"), _("Create an empty repository"));
+	wxMenuItem *itemInit = new wxMenuItem(submenu, ID_MENU_INIT, _("Create an &empty repository"), _("Create an empty repository"));
 	wxMenuItem *itemClone = new wxMenuItem(submenu, ID_MENU_CLONE, _("Cl&one a repository"), _("Clone a repository"));
 	wxMenuItem *itemDestroy = new wxMenuItem(submenu, ID_MENU_DESTROY, _("&Destroy the repository"), _("Destroy the repository"));
 	wxMenuItem *itemCommit = new wxMenuItem(submenu, ID_MENU_COMMIT, _("&Commit"), _("Commit"));
@@ -82,7 +82,7 @@ void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 	wxMenuItem *itemLog = new wxMenuItem(submenu, ID_MENU_LOG, _("&Log"), _("Log"));
 	wxMenuItem *itemStatus = new wxMenuItem(submenu, ID_MENU_STATUS, _("&Status"), _("Status"));
 	
-	submenu->Append(itemCreateEmpty);
+	submenu->Append(itemInit);
 	submenu->Append(itemClone);
 	submenu->Append(itemDestroy);
 	submenu->AppendSeparator();
@@ -94,7 +94,7 @@ void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 	
 	menuBar->Insert(menuBar->FindMenu(_("&Tools")) + 1, submenu, wxT("&GitBlocks"));
 	
-	Connect(ID_MENU_CREATE_EMPTY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::CreateEmpty));
+	Connect(ID_MENU_INIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Init));
 	Connect(ID_MENU_CLONE, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Clone));
 	Connect(ID_MENU_DESTROY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Destroy));
 	Connect(ID_MENU_COMMIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Commit));
@@ -122,7 +122,7 @@ void GitBlocks::Execute(wxString &command, const wxString comment, wxString dir)
 		Manager::Get()->GetLogManager()->Log(output[i], logSlot);
 }
 
-void GitBlocks::CreateEmpty(wxCommandEvent &event)
+void GitBlocks::Init(wxCommandEvent &event)
 {
 	wxString command = git + _T(" init");
 	Execute(command, _T("Creating an empty git repository ..."));

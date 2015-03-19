@@ -123,7 +123,7 @@ private:
 	
 	void Execute(wxString &command, const wxString comment, wxString dir = wxEmptyString);
 	
-	void CreateEmpty(wxCommandEvent &event);
+	void Init(wxCommandEvent &event);
 	void Clone(wxCommandEvent &event);
 	void Destroy(wxCommandEvent &event);
 	
