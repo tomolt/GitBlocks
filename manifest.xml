@@ -3,7 +3,7 @@
     <SdkVersion major="1" minor="19"  release="0" />
     <Plugin name="GitBlocks">
         <Value title="GitBlocks" />
-        <Value version="0.1" />
+        <Value version="0.4" />
         <Value description="Git integration for C::B (finally!)" />
         <Value author="Thomas Oltmann" />
         <Value authorEmail="tomolt@users.sourceforge.net" />
