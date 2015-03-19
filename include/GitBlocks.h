@@ -128,7 +128,10 @@ private:
 	void Destroy(wxCommandEvent &event);
 	
 	void Commit(wxCommandEvent &event);
+	
 	void Push(wxCommandEvent &event);
+	void Pull(wxCommandEvent &event);
+	void Fetch(wxCommandEvent &event);
 	
 	void DiffToIndex(wxCommandEvent &event);
 	

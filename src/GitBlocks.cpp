@@ -79,6 +79,8 @@ void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 	wxMenuItem *itemDestroy = new wxMenuItem(submenu, ID_MENU_DESTROY, _("&Destroy the repository"), _("Destroy the repository"));
 	wxMenuItem *itemCommit = new wxMenuItem(submenu, ID_MENU_COMMIT, _("&Commit"), _("Commit"));
 	wxMenuItem *itemPush = new wxMenuItem(submenu, ID_MENU_PUSH, _("&Push master to origin"), _("Push master to origin"));
+	wxMenuItem *itemPull = new wxMenuItem(submenu, ID_MENU_PULL, _("&Pull from origin"), _("Pull from origin"));
+	wxMenuItem *itemFetch = new wxMenuItem(submenu, ID_MENU_FETCH, _("&Fetch from origin"), _("Fetch from origin"));
 	wxMenuItem *itemDiffToIndex = new wxMenuItem(submenu, ID_MENU_DIFF_TO_INDEX, _("&Diff to index"), _("Diff to index"));
 	wxMenuItem *itemLog = new wxMenuItem(submenu, ID_MENU_LOG, _("&Show log"), _("Show log"));
 	wxMenuItem *itemStatus = new wxMenuItem(submenu, ID_MENU_STATUS, _("&Show status"), _("Show status"));
@@ -88,7 +90,10 @@ void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 	submenu->Append(itemDestroy);
 	submenu->AppendSeparator();
 	submenu->Append(itemCommit);
+	submenu->AppendSeparator();
 	submenu->Append(itemPush);
+	submenu->Append(itemPull);
+	submenu->Append(itemFetch);
 	submenu->AppendSeparator();
 	submenu->Append(itemDiffToIndex);
 	submenu->Append(itemLog);
@@ -101,6 +106,8 @@ void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 	Connect(ID_MENU_DESTROY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Destroy));
 	Connect(ID_MENU_COMMIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Commit));
 	Connect(ID_MENU_PUSH, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Push));
+	Connect(ID_MENU_PULL, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Pull));
+	Connect(ID_MENU_FETCH, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Fetch));
 	Connect(ID_MENU_DIFF_TO_INDEX, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::DiffToIndex));
 	Connect(ID_MENU_LOG, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Log));
 	Connect(ID_MENU_STATUS, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Status));
@@ -176,6 +183,18 @@ void GitBlocks::Push(wxCommandEvent &event)
 {
 	wxString command = _T("xterm -e \"") + git + _T(" push origin master\"");
 	Execute(command, _T("Pushing master to origin ..."));
+}
+
+void GitBlocks::Pull(wxCommandEvent &event)
+{
+	wxString command = _T("xterm -e \"") + git + _T(" pull origin\"");
+	Execute(command, _T("Pulling from origin ..."));
+}
+
+void GitBlocks::Fetch(wxCommandEvent &event)
+{
+	wxString command = _T("xterm -e \"") + git + _T(" fetch origin\"");
+	Execute(command, _T("Fetching from origin ..."));
 }
 
 void GitBlocks::DiffToIndex(wxCommandEvent &event)
