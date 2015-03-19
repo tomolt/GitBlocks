@@ -14,6 +14,7 @@
 
 #include "ConfigPanel.h"
 #include "CommitDialog.h"
+#include "CommitAllDialog.h"
 #include "CloneDialog.h"
 
 // Register the plugin with Code::Blocks.
@@ -78,6 +79,7 @@ void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 	wxMenuItem *itemClone = new wxMenuItem(submenu, ID_MENU_CLONE, _("Cl&one a repository"), _("Clone a repository"));
 	wxMenuItem *itemDestroy = new wxMenuItem(submenu, ID_MENU_DESTROY, _("&Destroy the repository"), _("Destroy the repository"));
 	wxMenuItem *itemCommit = new wxMenuItem(submenu, ID_MENU_COMMIT, _("&Commit"), _("Commit"));
+	wxMenuItem *itemCommitAll = new wxMenuItem(submenu, ID_MENU_COMMIT_ALL, _("&Commit all"), _("Commit all"));
 	wxMenuItem *itemPush = new wxMenuItem(submenu, ID_MENU_PUSH, _("&Push master to origin"), _("Push master to origin"));
 	wxMenuItem *itemPull = new wxMenuItem(submenu, ID_MENU_PULL, _("&Pull from origin"), _("Pull from origin"));
 	wxMenuItem *itemFetch = new wxMenuItem(submenu, ID_MENU_FETCH, _("&Fetch from origin"), _("Fetch from origin"));
@@ -90,6 +92,7 @@ void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 	submenu->Append(itemDestroy);
 	submenu->AppendSeparator();
 	submenu->Append(itemCommit);
+	submenu->Append(itemCommitAll);
 	submenu->AppendSeparator();
 	submenu->Append(itemPush);
 	submenu->Append(itemPull);
@@ -105,6 +108,7 @@ void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 	Connect(ID_MENU_CLONE, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Clone));
 	Connect(ID_MENU_DESTROY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Destroy));
 	Connect(ID_MENU_COMMIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Commit));
+	Connect(ID_MENU_COMMIT_ALL, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::CommitAll));
 	Connect(ID_MENU_PUSH, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Push));
 	Connect(ID_MENU_PULL, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Pull));
 	Connect(ID_MENU_FETCH, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Fetch));
@@ -172,6 +176,24 @@ void GitBlocks::Commit(wxCommandEvent &event)
 		for(unsigned int i=0;i<dialog.GetNumFiles();i++)
 			if(dialog.IsFileChecked(i))
 				command += _T(" ") + dialog.GetFileName(i);
+		Execute(command, _T("Adding files ..."));
+		
+		command = git + _T(" commit -m \"") + dialog.GetComment() + _T("\"");
+		Execute(command, _T("Committing ..."));
+	}
+}
+
+void GitBlocks::CommitAll(wxCommandEvent &event)
+{
+	CommitAllDialog dialog(Manager::Get()->GetAppWindow());
+	if(dialog.ShowModal())
+	{
+		wxString command;
+		cbProject *project = Manager::Get()->GetProjectManager()->GetActiveProject();
+		
+		command = git + _T(" add");
+		for(unsigned int i=0;i<project->GetFilesCount();i++)
+			command += _T(" ") + project->GetFile(i)->relativeFilename;
 		Execute(command, _T("Adding files ..."));
 		
 		command = git + _T(" commit -m \"") + dialog.GetComment() + _T("\"");

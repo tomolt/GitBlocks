@@ -38,13 +38,3 @@ CommitDialog::CommitDialog(wxWindow *parent) : wxDialog(parent, ID_COMD, _T("Com
 	Connect(ID_COMD_CC_COMMIT, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CommitDialog::OnCommit));
 	Connect(ID_COMD_CC_CANCEL, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CommitDialog::OnCancel));
 }
-
-void CommitDialog::OnCommit(wxCommandEvent& event)
-{
-	EndModal(1);
-}
-
-void CommitDialog::OnCancel(wxCommandEvent& event)
-{
-	EndModal(0);
-}

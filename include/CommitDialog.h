@@ -20,8 +20,8 @@ private:
 	wxCheckListBox *filechoice;
 	wxTextCtrl *comtLine;
 	
-	void OnCommit(wxCommandEvent &event);
-	void OnCancel(wxCommandEvent &event);
+	void OnCommit(wxCommandEvent &event) { EndModal(1); }
+	void OnCancel(wxCommandEvent &event) { EndModal(0); }
 };
 
 #endif // COMMITDIALOG_H

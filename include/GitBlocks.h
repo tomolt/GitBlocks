@@ -128,6 +128,7 @@ private:
 	void Destroy(wxCommandEvent &event);
 	
 	void Commit(wxCommandEvent &event);
+	void CommitAll(wxCommandEvent &event);
 	
 	void Push(wxCommandEvent &event);
 	void Pull(wxCommandEvent &event);
