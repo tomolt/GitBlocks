@@ -177,7 +177,7 @@ void GitBlocks::Push(wxCommandEvent &event)
 
 void GitBlocks::Log(wxCommandEvent &event)
 {
-	wxString command = git + _T(" log");
+	wxString command = git + _T(" log --pretty=format:%h%x09%an%x09%ad%x09%s");
 	wxString comment = _T("Fetching log ...");
 	wxString dir = Manager::Get()->GetProjectManager()->GetActiveProject()->GetBasePath();
 	
