@@ -1,7 +1,7 @@
 /**************************************************************
 * Name:      GitBlocks
 * Purpose:   Code::Blocks plugin
-* Author:    Thomas Oltmann (thomas.oltmann.hhg@gmail.com)
+* Author:    Thomas Oltmann (tomolt@users.sourceforge.net)
 * Created:   2015-01-04
 * Copyright: Thomas Oltmann
 * License:   GPL3
