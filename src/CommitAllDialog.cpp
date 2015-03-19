@@ -1,6 +1,6 @@
 #include "CommitAllDialog.h"
 
-CommitAllDialog::CommitAllDialog(wxWindow *parent) : wxDialog(parent, ID_COAD, _T("Commit All"))
+CommitAllDialog::CommitAllDialog(wxWindow *parent) : wxDialog(parent, ID_COAD, _T("Commit all"))
 {
 	wxBoxSizer *coadSizer = new wxBoxSizer(wxVERTICAL);
 	SetSizer(coadSizer);
@@ -17,7 +17,7 @@ CommitAllDialog::CommitAllDialog(wxWindow *parent) : wxDialog(parent, ID_COAD, _
 	wxBoxSizer *ccSizer = new wxBoxSizer(wxHORIZONTAL);
 	coadSizer->Add(ccSizer, 0);
 	
-	wxButton *ccCommitAll = new wxButton(this, ID_COAD_CC_COMMIT_ALL, _T("Commit All"));
+	wxButton *ccCommitAll = new wxButton(this, ID_COAD_CC_COMMIT_ALL, _T("Commit all"));
 	ccSizer->Add(ccCommitAll, wxEXPAND);
 	
 	wxButton *ccCancel = new wxButton(this, ID_COAD_CC_CANCEL, _T("Cancel"));
