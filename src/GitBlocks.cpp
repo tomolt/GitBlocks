@@ -174,19 +174,8 @@ void GitBlocks::Commit(wxCommandEvent &event)
 
 void GitBlocks::Push(wxCommandEvent &event)
 {
-	wxString command = git + _T(" push origin master");
-	wxString dir = Manager::Get()->GetProjectManager()->GetActiveProject()->GetBasePath();
-	
-	if(dir.empty())
-		dir = Manager::Get()->GetProjectManager()->GetActiveProject()->GetBasePath();
-	
-	Manager::Get()->GetLogManager()->Log(_T("Pushing master to origin ..."), logSlot);
-	Manager::Get()->GetLogManager()->Log(command, logSlot);
-	
-	wxString ocwd = wxGetCwd();
-	wxSetWorkingDirectory(dir);
-	wxShell(command);
-	wxSetWorkingDirectory(ocwd);
+	wxString command = _T("xterm -hold -e \"") + git + _T(" push origin master\"");
+	Execute(command, _T("Pushing master to origin ..."));
 }
 
 void GitBlocks::DiffToIndex(wxCommandEvent &event)
