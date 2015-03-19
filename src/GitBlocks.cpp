@@ -78,9 +78,9 @@ void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 	wxMenuItem *itemClone = new wxMenuItem(submenu, ID_MENU_CLONE, _("Cl&one a repository"), _("Clone a repository"));
 	wxMenuItem *itemDestroy = new wxMenuItem(submenu, ID_MENU_DESTROY, _("&Destroy the repository"), _("Destroy the repository"));
 	wxMenuItem *itemCommit = new wxMenuItem(submenu, ID_MENU_COMMIT, _("&Commit"), _("Commit"));
-	wxMenuItem *itemPush = new wxMenuItem(submenu, ID_MENU_PUSH, _("&Push"), _("Push"));
-	wxMenuItem *itemLog = new wxMenuItem(submenu, ID_MENU_LOG, _("&Log"), _("Log"));
-	wxMenuItem *itemStatus = new wxMenuItem(submenu, ID_MENU_STATUS, _("&Status"), _("Status"));
+	wxMenuItem *itemPush = new wxMenuItem(submenu, ID_MENU_PUSH, _("&Push master to origin"), _("Push master to origin"));
+	wxMenuItem *itemLog = new wxMenuItem(submenu, ID_MENU_LOG, _("&Show log"), _("Show log"));
+	wxMenuItem *itemStatus = new wxMenuItem(submenu, ID_MENU_STATUS, _("&Show status"), _("Show status"));
 	
 	submenu->Append(itemInit);
 	submenu->Append(itemClone);
@@ -142,7 +142,7 @@ void GitBlocks::Destroy(wxCommandEvent &event)
 {
 	if(wxMessageBox(_T("Are you sure you want to destroy the repository?"), _T("Destroy repository"), wxYES_NO) == wxYES)
 	{
-#ifdef __WXMSW__ /// Fucking hipster Windows needs extra code
+#ifdef __WXMSW__ // Fucking hipster Windows needs extra code
 		wxString command = _T("RD /S .git");
 #else
 		wxString command = _T("rm -r .git");
