@@ -174,7 +174,7 @@ void GitBlocks::Commit(wxCommandEvent &event)
 
 void GitBlocks::Push(wxCommandEvent &event)
 {
-	wxString command = _T("xterm -hold -e \"") + git + _T(" push origin master\"");
+	wxString command = _T("xterm -e \"") + git + _T(" push origin master\"");
 	Execute(command, _T("Pushing master to origin ..."));
 }
 
