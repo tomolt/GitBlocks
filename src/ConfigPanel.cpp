@@ -54,9 +54,9 @@ void ConfigPanel::OnCancel()
 
 void ConfigPanel::GitBrowse(wxCommandEvent &event)
 {
-#ifdef __WXMSW__ /// Fucking hipster Windows needs extra code
+#ifdef __WXMSW__ /// Fucking hipster Windows needs some extra code
 	gitLine->SetValue(wxFileSelector(_("Git command"), wxEmptyString, wxEmptyString, wxEmptyString, _("Executable Files (*.exe)|*.exe"), wxFD_OPEN | wxFD_FILE_MUST_EXIST, this));
 #else
-	gitLine->SetValue(wxFileSelector(_("Git command"), wxEmptyString, wxEmptyString, wxEmptyString, _("All Files (*.*)|*.*"), wxFD_OPEN | wxFD_FILE_MUST_EXIST, this));
+	gitLine->SetValue(wxFileSelector(_("Git command"), wxEmptyString, wxEmptyString, wxEmptyString, _("All Files (*)|*"), wxFD_OPEN | wxFD_FILE_MUST_EXIST, this));
 #endif
 }
