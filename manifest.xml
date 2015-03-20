@@ -4,7 +4,7 @@
     <Plugin name="GitBlocks">
         <Value title="GitBlocks" />
         <Value version="0.4.3" />
-        <Value description="Git integration for C::B (finally!)" />
+        <Value description="GitBlocks is an easy-to-use and small git plugin for Code::Blocks." />
         <Value author="Thomas Oltmann" />
         <Value authorEmail="tomolt@users.sourceforge.net" />
         <Value authorWebsite="" />
