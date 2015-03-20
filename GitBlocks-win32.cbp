@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="GitBlocks wx2.8.x Win32" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="default">
+				<Option output="GitBlocks.so" prefix_auto="0" extension_auto="0" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option host_application="codeblocks" />
+				<Option run_host_application_in_terminal="0" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="$(#CB_RELEASE_TYPE)" />
+					<Add option="-pipe" />
+					<Add option="-mthreads" />
+					<Add option="-fmessage-length=0" />
+					<Add option="-fexceptions" />
+					<Add option="-Winvalid-pch" />
+					<Add option="-DBUILDING_PLUGIN" />
+					<Add option="-DHAVE_W32API_H" />
+					<Add option="-D__WXMSW__" />
+					<Add option="-DWXUSINGDLL" />
+					<Add option="-DcbDEBUG" />
+					<Add option="-DNOPCH" />
+					<Add option="-DwxUSE_UNICODE" />
+					<Add directory="$(#WX.include)" />
+					<Add directory="$(#WX.lib)/gcc_dll$(WX_CFG)/msw$(WX_SUFFIX)" />
+					<Add directory="$(#CB.include)" />
+					<Add directory="$(#CB)/sdk/wxscintilla/include" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-Wl,--add-stdcall-alias" />
+					<Add option="-Wl,--no-undefined" />
+					<Add option="-mthreads" />
+					<Add library="codeblocks" />
+					<Add library="wxmsw$(WX_VERSION)$(WX_SUFFIX)" />
+					<Add directory="$(#CB)/devel" />
+					<Add directory="$(#WX.lib)/gcc_dll$(WX_CFG)" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="CMD /C REM rm GitBlocks.zip GitBlocks.cbplugin" />
+					<Add after="zip -j9 GitBlocks.zip manifest.xml" />
+					<Add after="zip -j9 GitBlocks.cbplugin GitBlocks.so GitBlocks.zip GitBlocks.png GitBlocks-off.png" />
+				</ExtraCommands>
+				<Environment>
+					<Variable name="WX_CFG" value="" />
+					<Variable name="WX_SUFFIX" value="u" />
+					<Variable name="WX_VERSION" value="28" />
+				</Environment>
+			</Target>
+		</Build>
+		<Unit filename="CHECKLIST.txt" />
+		<Unit filename="GitBlocks-off.png" />
+		<Unit filename="GitBlocks.png" />
+		<Unit filename="include/CloneDialog.h" />
+		<Unit filename="include/CommitAllDialog.h" />
+		<Unit filename="include/CommitDialog.h" />
+		<Unit filename="include/Common.h" />
+		<Unit filename="include/ConfigPanel.h" />
+		<Unit filename="include/GitBlocks.h" />
+		<Unit filename="manifest.xml" />
+		<Unit filename="src/CloneDialog.cpp" />
+		<Unit filename="src/CommitAllDialog.cpp" />
+		<Unit filename="src/CommitDialog.cpp" />
+		<Unit filename="src/ConfigPanel.cpp" />
+		<Unit filename="src/GitBlocks.cpp" />
+		<Extensions>
+			<envvars />
+			<code_completion />
+			<wxsmith version="1">
+				<gui name="wxWidgets" src="" main="" init_handlers="necessary" language="CPP" />
+			</wxsmith>
+			<lib_finder disable_auto="1" />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
