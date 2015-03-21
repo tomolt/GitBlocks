@@ -38,12 +38,14 @@
 		<Unit filename="GitBlocks-off.png" />
 		<Unit filename="GitBlocks.png" />
 		<Unit filename="include/CloneDialog.h" />
+		<Unit filename="include/CommitAllDialog.h" />
 		<Unit filename="include/CommitDialog.h" />
 		<Unit filename="include/Common.h" />
 		<Unit filename="include/ConfigPanel.h" />
 		<Unit filename="include/GitBlocks.h" />
 		<Unit filename="manifest.xml" />
 		<Unit filename="src/CloneDialog.cpp" />
+		<Unit filename="src/CommitAllDialog.cpp" />
 		<Unit filename="src/CommitDialog.cpp" />
 		<Unit filename="src/ConfigPanel.cpp" />
 		<Unit filename="src/GitBlocks.cpp" />
