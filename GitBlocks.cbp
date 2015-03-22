@@ -30,28 +30,25 @@
 				<ExtraCommands>
 					<Add after="rm -f GitBlocks.zip GitBlocks.cbplugin" />
 					<Add after="zip -j9 GitBlocks.zip manifest.xml" />
-					<Add after="zip -j9 GitBlocks.cbplugin GitBlocks.so GitBlocks.zip GitBlocks.png GitBlocks-off.png" />
+					<Add after="zip -j9 GitBlocks.cbplugin GitBlocks.so GitBlocks.zip" />
 				</ExtraCommands>
 			</Target>
 		</Build>
-		<Unit filename="CHECKLIST.txt" />
-		<Unit filename="GitBlocks-off.png" />
-		<Unit filename="GitBlocks.png" />
 		<Unit filename="include/CloneDialog.h" />
 		<Unit filename="include/CommitAllDialog.h" />
 		<Unit filename="include/CommitDialog.h" />
-		<Unit filename="include/Common.h" />
-		<Unit filename="include/ConfigPanel.h" />
 		<Unit filename="include/GitBlocks.h" />
+		<Unit filename="include/NewBranchDialog.h" />
 		<Unit filename="manifest.xml" />
 		<Unit filename="src/CloneDialog.cpp" />
 		<Unit filename="src/CommitAllDialog.cpp" />
 		<Unit filename="src/CommitDialog.cpp" />
-		<Unit filename="src/ConfigPanel.cpp" />
 		<Unit filename="src/GitBlocks.cpp" />
+		<Unit filename="src/NewBranchDialog.cpp" />
 		<Unit filename="wxsmith/CloneDialog.wxs" />
 		<Unit filename="wxsmith/CommitAllDialog.wxs" />
 		<Unit filename="wxsmith/CommitDialog.wxs" />
+		<Unit filename="wxsmith/NewBranchDialog.wxs" />
 		<Extensions>
 			<envvars />
 			<code_completion />
@@ -61,6 +58,7 @@
 					<wxDialog wxs="wxsmith/CommitAllDialog.wxs" src="src/CommitAllDialog.cpp" hdr="include/CommitAllDialog.h" fwddecl="0" i18n="1" name="CommitAllDialog" language="CPP" />
 					<wxDialog wxs="wxsmith/CloneDialog.wxs" src="src/CloneDialog.cpp" hdr="include/CloneDialog.h" fwddecl="0" i18n="1" name="CloneDialog" language="CPP" />
 					<wxDialog wxs="wxsmith/CommitDialog.wxs" src="src/CommitDialog.cpp" hdr="include/CommitDialog.h" fwddecl="0" i18n="1" name="CommitDialog" language="CPP" />
+					<wxDialog wxs="wxsmith/NewBranchDialog.wxs" src="src/NewBranchDialog.cpp" hdr="include/NewBranchDialog.h" fwddecl="0" i18n="1" name="NewBranchDialog" language="CPP" />
 				</resources>
 			</wxsmith>
 			<lib_finder disable_auto="1" />

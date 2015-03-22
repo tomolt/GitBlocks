@@ -68,53 +68,36 @@ int GitBlocks::Configure()
 
 cbConfigurationPanel *GitBlocks::GetConfigurationPanel(wxWindow* parent)
 {
-	return new ConfigPanel(parent, this);
+	return NULL;
+}
+
+void GitBlocks::RegisterFunction(wxObjectEventFunction func, wxString label)
+{
+	wxMenuItem *item = new wxMenuItem(menu, wxID_ANY, label, label);
+	menu->Append(item);
+	Connect(item->GetId(), wxEVT_COMMAND_MENU_SELECTED, func);
 }
 
 void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 {
-	wxMenu *submenu = new wxMenu();
+	menu = new wxMenu();
 	
-	wxMenuItem *itemInit = new wxMenuItem(submenu, ID_MENU_INIT, _("Create an &empty repository"), _("Create an empty repository"));
-	wxMenuItem *itemClone = new wxMenuItem(submenu, ID_MENU_CLONE, _("Cl&one a repository"), _("Clone a repository"));
-	wxMenuItem *itemDestroy = new wxMenuItem(submenu, ID_MENU_DESTROY, _("&Destroy the repository"), _("Destroy the repository"));
-	wxMenuItem *itemCommit = new wxMenuItem(submenu, ID_MENU_COMMIT, _("&Commit"), _("Commit"));
-	wxMenuItem *itemCommitAll = new wxMenuItem(submenu, ID_MENU_COMMIT_ALL, _("&Commit all"), _("Commit all"));
-	wxMenuItem *itemPush = new wxMenuItem(submenu, ID_MENU_PUSH, _("&Push master to origin"), _("Push master to origin"));
-	wxMenuItem *itemPull = new wxMenuItem(submenu, ID_MENU_PULL, _("&Pull from origin"), _("Pull from origin"));
-	wxMenuItem *itemFetch = new wxMenuItem(submenu, ID_MENU_FETCH, _("&Fetch from origin"), _("Fetch from origin"));
-	wxMenuItem *itemDiffToIndex = new wxMenuItem(submenu, ID_MENU_DIFF_TO_INDEX, _("&Diff to index"), _("Diff to index"));
-	wxMenuItem *itemLog = new wxMenuItem(submenu, ID_MENU_LOG, _("&Show log"), _("Show log"));
-	wxMenuItem *itemStatus = new wxMenuItem(submenu, ID_MENU_STATUS, _("&Show status"), _("Show status"));
+	RegisterFunction(wxCommandEventHandler(GitBlocks::Init), _("Create an empty repository"));
+	RegisterFunction(wxCommandEventHandler(GitBlocks::Clone), _("Clone an existing repository"));
+	RegisterFunction(wxCommandEventHandler(GitBlocks::Destroy), _("Destroy the local repository"));
+	menu->AppendSeparator();
+	RegisterFunction(wxCommandEventHandler(GitBlocks::Commit), _("Commit"));
+	RegisterFunction(wxCommandEventHandler(GitBlocks::CommitAll), _("Commit all changes"));
+	menu->AppendSeparator();
+	RegisterFunction(wxCommandEventHandler(GitBlocks::Push), _("Push to origin"));
+	RegisterFunction(wxCommandEventHandler(GitBlocks::Pull), _("Pull from origin"));
+	RegisterFunction(wxCommandEventHandler(GitBlocks::Fetch), _("Fetch from origin"));
+	menu->AppendSeparator();
+	RegisterFunction(wxCommandEventHandler(GitBlocks::DiffToIndex), _("Diff to index"));
+	RegisterFunction(wxCommandEventHandler(GitBlocks::Log), _("Show log"));
+	RegisterFunction(wxCommandEventHandler(GitBlocks::Status), _("Show status"));
 	
-	submenu->Append(itemInit);
-	submenu->Append(itemClone);
-	submenu->Append(itemDestroy);
-	submenu->AppendSeparator();
-	submenu->Append(itemCommit);
-	submenu->Append(itemCommitAll);
-	submenu->AppendSeparator();
-	submenu->Append(itemPush);
-	submenu->Append(itemPull);
-	submenu->Append(itemFetch);
-	submenu->AppendSeparator();
-	submenu->Append(itemDiffToIndex);
-	submenu->Append(itemLog);
-	submenu->Append(itemStatus);
-	
-	menuBar->Insert(menuBar->FindMenu(_("&Tools")) + 1, submenu, wxT("&GitBlocks"));
-	
-	Connect(ID_MENU_INIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Init));
-	Connect(ID_MENU_CLONE, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Clone));
-	Connect(ID_MENU_DESTROY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Destroy));
-	Connect(ID_MENU_COMMIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Commit));
-	Connect(ID_MENU_COMMIT_ALL, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::CommitAll));
-	Connect(ID_MENU_PUSH, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Push));
-	Connect(ID_MENU_PULL, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Pull));
-	Connect(ID_MENU_FETCH, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Fetch));
-	Connect(ID_MENU_DIFF_TO_INDEX, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::DiffToIndex));
-	Connect(ID_MENU_LOG, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Log));
-	Connect(ID_MENU_STATUS, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(GitBlocks::Status));
+	menuBar->Insert(menuBar->FindMenu(_("&Tools")) + 1, menu, wxT("&GitBlocks"));
 }
 
 void GitBlocks::Execute(wxString &command, const wxString comment, wxString dir)

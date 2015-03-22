@@ -10,9 +10,13 @@
 #ifndef GITBLOCKS_H_INCLUDED
 #define GITBLOCKS_H_INCLUDED
 
-#include <cbplugin.h> // for "class cbPlugin"
+#include <wx/wxprec.h>
 
-#include "Common.h"
+#ifndef WX_PRECOMP
+#include <wx/wx.h>
+#endif
+
+#include <cbplugin.h> // for "class cbPlugin"
 
 class GitBlocks : public cbPlugin
 {
@@ -118,8 +122,11 @@ protected:
 	
 private:
 	int logSlot;
+	wxMenu *menu;
 	
 	wxString git;
+	
+	void RegisterFunction(wxObjectEventFunction func, wxString label);
 	
 	void Execute(wxString &command, const wxString comment, wxString dir = wxEmptyString);
 	
@@ -135,7 +142,6 @@ private:
 	void Fetch(wxCommandEvent &event);
 	
 	void DiffToIndex(wxCommandEvent &event);
-	
 	void Log(wxCommandEvent &event);
 	void Status(wxCommandEvent &event);
 	
