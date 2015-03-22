@@ -145,10 +145,10 @@ void GitBlocks::Init(wxCommandEvent &event)
 void GitBlocks::Clone(wxCommandEvent &event)
 {
 	CloneDialog dialog(Manager::Get()->GetAppWindow());
-	if(dialog.ShowModal())
+	if(dialog.ShowModal() == wxID_OK)
 	{
-		wxString command = git + _T(" clone ") + dialog.GetOrigin();
-		Execute(command, _T("Cloning repository ..."), dialog.GetDirectory());
+		wxString command = git + _T(" clone ") + dialog.Origin->GetValue();
+		Execute(command, _T("Cloning repository ..."), dialog.Directory->GetValue());
 	}
 }
 
