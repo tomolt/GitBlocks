@@ -10,7 +10,6 @@ CLEANFILES = GitBlocks.zip
 GitBlocks_la_SOURCES = src/CloneDialog.cpp \
 						src/CommitAllDialog.cpp \
 						src/CommitDialog.cpp \
-						src/ConfigPanel.cpp \
 						src/GitBlocks.cpp \
 						src/NewBranchDialog.cpp \
 						src/SwitchBranchDialog.cpp
@@ -18,7 +17,6 @@ GitBlocks_la_SOURCES = src/CloneDialog.cpp \
 noinst_HEADERS = include/CloneDialog.h \
 					include/CommitAllDialog.h \
 					include/CommitDialog.h \
-					include/ConfigPanel.h \
 					include/GitBlocks.h \
 					include/NewBranchDialog.h \
 					incldue/SwitchBranchDialog.h
