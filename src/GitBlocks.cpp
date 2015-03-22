@@ -191,9 +191,9 @@ void GitBlocks::Push(wxCommandEvent &event)
 #ifdef __WXMSW__ // Fucking hipster Windows needs some extra code
 	wxString command = _("cmd.exe /C \"") + git + _(" push origin master\"");
 #else
-	wxString command = _("xterm -e \"") + git + _(" push origin master\"");
+	wxString command = _("xterm -e \"") + git + _(" push origin HEAD\"");
 #endif
-	Execute(command, _("Pushing master to origin ..."));
+	Execute(command, _("Pushing HEAD to origin ..."));
 }
 
 void GitBlocks::Pull(wxCommandEvent &event)
