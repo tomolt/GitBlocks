@@ -19,7 +19,7 @@ noinst_HEADERS = include/CloneDialog.h \
 					include/CommitDialog.h \
 					include/GitBlocks.h \
 					include/NewBranchDialog.h \
-					incldue/SwitchBranchDialog.h
+					include/SwitchBranchDialog.h
 
 GitBlocks_la_CPPFLAGS = -ansi $(WX_CFLAGS) $(CB_CFLAGS) -Iinclude
 
