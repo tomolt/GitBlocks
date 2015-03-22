@@ -186,7 +186,7 @@ void GitBlocks::Commit(wxCommandEvent &event)
 void GitBlocks::CommitAll(wxCommandEvent &event)
 {
 	CommitAllDialog dialog(Manager::Get()->GetAppWindow());
-	if(dialog.ShowModal())
+	if(dialog.ShowModal() == wxID_OK)
 	{
 		wxString command;
 		cbProject *project = Manager::Get()->GetProjectManager()->GetActiveProject();
@@ -196,7 +196,7 @@ void GitBlocks::CommitAll(wxCommandEvent &event)
 			command += _T(" ") + project->GetFile(i)->relativeFilename;
 		Execute(command, _T("Adding files ..."));
 		
-		command = git + _T(" commit -m \"") + dialog.GetComment() + _T("\"");
+		command = git + _T(" commit -m \"") + dialog.Comment->GetValue() + _T("\"");
 		Execute(command, _T("Committing ..."));
 	}
 }

@@ -1,21 +1,38 @@
 #ifndef COMMITALLDIALOG_H
 #define COMMITALLDIALOG_H
 
-#include "Common.h"
-#include "GitBlocks.h"
+//(*Headers(CommitAllDialog)
+#include <wx/dialog.h>
+#include <wx/sizer.h>
+#include <wx/stattext.h>
+#include <wx/textctrl.h>
+//*)
 
-class CommitAllDialog : public wxDialog
+class CommitAllDialog: public wxDialog
 {
-public:
-	CommitAllDialog(wxWindow *parent);
-	
-	wxString GetComment() { return comtLine->GetValue(); }
-	
-private:
-	wxTextCtrl *comtLine;
-	
-	void OnCommitAll(wxCommandEvent &event) { EndModal(1); }
-	void OnCancel(wxCommandEvent &event) { EndModal(0); }
+	public:
+
+		CommitAllDialog(wxWindow* parent,wxWindowID id=wxID_ANY,const wxPoint& pos=wxDefaultPosition,const wxSize& size=wxDefaultSize);
+		virtual ~CommitAllDialog();
+
+		//(*Declarations(CommitAllDialog)
+		wxStaticText* StaticText1;
+		wxTextCtrl* Comment;
+		//*)
+
+	protected:
+
+		//(*Identifiers(CommitAllDialog)
+		static const long ID_STATICTEXT1;
+		static const long ID_COMMENT;
+		//*)
+
+	private:
+
+		//(*Handlers(CommitAllDialog)
+		//*)
+
+		DECLARE_EVENT_TABLE()
 };
 
-#endif // COMMITALLDIALOG_H
+#endif
