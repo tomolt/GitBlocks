@@ -1,0 +1,15 @@
+#!/bin/sh
+
+AUTOCONF=autoconf
+#AUTOHEADER=autoheader
+AUTOMAKE=automake
+ACLOCAL=aclocal
+LIBTOOLIZE=libtoolize
+
+# clean up files which cause confusion when switch versions of auto*
+rm -rf autom4te.cache
+
+$LIBTOOLIZE --force --copy && \
+	$ACLOCAL $ACLOCAL_FLAGS && \
+	$AUTOMAKE --include-deps --add-missing --foreign --copy && \
+	$AUTOCONF 
