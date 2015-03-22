@@ -16,6 +16,7 @@
 #include "CommitAllDialog.h"
 #include "CloneDialog.h"
 #include "NewBranchDialog.h"
+#include "SwitchBranchDialog.h"
 
 // Register the plugin with Code::Blocks.
 // We are using an anonymous namespace so we don't litter the global one.
@@ -94,6 +95,7 @@ void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 	RegisterFunction(wxCommandEventHandler(GitBlocks::Fetch), _("Fetch from origin"));
 	menu->AppendSeparator();
 	RegisterFunction(wxCommandEventHandler(GitBlocks::NewBranch), _("Add new branch"));
+	RegisterFunction(wxCommandEventHandler(GitBlocks::SwitchBranch), _("Switch branch"));
 	menu->AppendSeparator();
 	RegisterFunction(wxCommandEventHandler(GitBlocks::DiffToIndex), _("Diff to index"));
 	RegisterFunction(wxCommandEventHandler(GitBlocks::Log), _("Show log"));
@@ -123,8 +125,7 @@ void GitBlocks::Execute(wxString command, const wxString comment, wxString dir)
 
 void GitBlocks::Init(wxCommandEvent &event)
 {
-	wxString command = git + _(" init");
-	Execute(command, _("Creating an empty git repository ..."));
+	Execute(git + _(" init"), _("Creating an empty git repository ..."));
 }
 
 void GitBlocks::Clone(wxCommandEvent &event)
@@ -225,6 +226,13 @@ void GitBlocks::NewBranch(wxCommandEvent &event)
 		if(dialog.Switch->IsChecked())
 			Execute(git + _(" checkout ") + dialog.Name->GetValue(), _("Switching to new branch ..."));
 	}
+}
+
+void GitBlocks::SwitchBranch(wxCommandEvent &event)
+{
+	SwitchBranchDialog dialog(Manager::Get()->GetAppWindow());
+	if(dialog.ShowModal() == wxID_OK)
+		Execute(git + _(" checkout ") + dialog.Name->GetValue(), _("Switching branch ..."));
 }
 
 void GitBlocks::DiffToIndex(wxCommandEvent &event)

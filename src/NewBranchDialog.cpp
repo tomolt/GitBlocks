@@ -24,9 +24,7 @@ NewBranchDialog::NewBranchDialog(wxWindow* parent,wxWindowID id,const wxPoint& p
 	wxBoxSizer* BoxSizer1;
 	wxStdDialogButtonSizer* StdDialogButtonSizer1;
 
-	Create(parent, id, _("Add new branch"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("id"));
-	SetClientSize(wxDefaultSize);
-	Move(wxDefaultPosition);
+	Create(parent, wxID_ANY, _("Add new branch"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
 	BoxSizer1 = new wxBoxSizer(wxVERTICAL);
 	BoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Name: "), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT1"));

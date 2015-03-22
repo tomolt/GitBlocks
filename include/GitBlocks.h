@@ -142,6 +142,7 @@ private:
 	void Fetch(wxCommandEvent &event);
 	
 	void NewBranch(wxCommandEvent &event);
+	void SwitchBranch(wxCommandEvent &event);
 	
 	void DiffToIndex(wxCommandEvent &event);
 	void Log(wxCommandEvent &event);
