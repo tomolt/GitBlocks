@@ -173,12 +173,12 @@ void GitBlocks::Commit(wxCommandEvent &event)
 		wxString command;
 		
 		command = git + _T(" add");
-		for(unsigned int i=0;i<dialog.GetNumFiles();i++)
-			if(dialog.IsFileChecked(i))
-				command += _T(" ") + dialog.GetFileName(i);
+		for(unsigned int i = 0; i < dialog.FileChoice->GetCount(); i++)
+			if(dialog.FileChoice->IsChecked(i))
+				command += _T(" ") + dialog.FileChoice->GetString(i);
 		Execute(command, _T("Adding files ..."));
 		
-		command = git + _T(" commit -m \"") + dialog.GetComment() + _T("\"");
+		command = git + _T(" commit -m \"") + dialog.Comment->GetValue() + _T("\"");
 		Execute(command, _T("Committing ..."));
 	}
 }

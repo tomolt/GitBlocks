@@ -51,6 +51,7 @@
 		<Unit filename="src/GitBlocks.cpp" />
 		<Unit filename="wxsmith/CloneDialog.wxs" />
 		<Unit filename="wxsmith/CommitAllDialog.wxs" />
+		<Unit filename="wxsmith/CommitDialog.wxs" />
 		<Extensions>
 			<envvars />
 			<code_completion />
@@ -59,6 +60,7 @@
 				<resources>
 					<wxDialog wxs="wxsmith/CommitAllDialog.wxs" src="src/CommitAllDialog.cpp" hdr="include/CommitAllDialog.h" fwddecl="0" i18n="1" name="CommitAllDialog" language="CPP" />
 					<wxDialog wxs="wxsmith/CloneDialog.wxs" src="src/CloneDialog.cpp" hdr="include/CloneDialog.h" fwddecl="0" i18n="1" name="CloneDialog" language="CPP" />
+					<wxDialog wxs="wxsmith/CommitDialog.wxs" src="src/CommitDialog.cpp" hdr="include/CommitDialog.h" fwddecl="0" i18n="1" name="CommitDialog" language="CPP" />
 				</resources>
 			</wxsmith>
 			<lib_finder disable_auto="1" />
