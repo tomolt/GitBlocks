@@ -49,6 +49,7 @@
 		<Unit filename="src/CommitDialog.cpp" />
 		<Unit filename="src/ConfigPanel.cpp" />
 		<Unit filename="src/GitBlocks.cpp" />
+		<Unit filename="wxsmith/CommitAllDialog.wxs" />
 		<Extensions>
 			<envvars />
 			<code_completion />
