@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT(GitBlocks, 0.6.4, tomolt@users.sourceforge.net)
+AC_INIT(GitBlocks, 0.7.0, tomolt@users.sourceforge.net)
 
 AM_INIT_AUTOMAKE([subdir-objects])
 
