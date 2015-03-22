@@ -12,10 +12,10 @@
 #include <cbeditor.h>
 #include <cbstyledtextctrl.h>
 
-#include "ConfigPanel.h"
 #include "CommitDialog.h"
 #include "CommitAllDialog.h"
 #include "CloneDialog.h"
+#include "NewBranchDialog.h"
 
 // Register the plugin with Code::Blocks.
 // We are using an anonymous namespace so we don't litter the global one.
@@ -93,6 +93,8 @@ void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 	RegisterFunction(wxCommandEventHandler(GitBlocks::Pull), _("Pull from origin"));
 	RegisterFunction(wxCommandEventHandler(GitBlocks::Fetch), _("Fetch from origin"));
 	menu->AppendSeparator();
+	RegisterFunction(wxCommandEventHandler(GitBlocks::NewBranch), _("Add new branch"));
+	menu->AppendSeparator();
 	RegisterFunction(wxCommandEventHandler(GitBlocks::DiffToIndex), _("Diff to index"));
 	RegisterFunction(wxCommandEventHandler(GitBlocks::Log), _("Show log"));
 	RegisterFunction(wxCommandEventHandler(GitBlocks::Status), _("Show status"));
@@ -100,7 +102,7 @@ void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 	menuBar->Insert(menuBar->FindMenu(_("&Tools")) + 1, menu, wxT("&GitBlocks"));
 }
 
-void GitBlocks::Execute(wxString &command, const wxString comment, wxString dir)
+void GitBlocks::Execute(wxString command, const wxString comment, wxString dir)
 {
 	if(dir.empty())
 		dir = Manager::Get()->GetProjectManager()->GetActiveProject()->GetBasePath();
@@ -212,6 +214,17 @@ void GitBlocks::Fetch(wxCommandEvent &event)
 	wxString command = _T("xterm -e \"") + git + _T(" fetch origin\"");
 #endif
 	Execute(command, _T("Fetching from origin ..."));
+}
+
+void GitBlocks::NewBranch(wxCommandEvent &event)
+{
+	NewBranchDialog dialog(Manager::Get()->GetAppWindow());
+	if(dialog.ShowModal() == wxID_OK)
+	{
+		Execute(git + _(" branch ") + dialog.Name->GetValue(), _("Adding new branch ..."));
+		if(dialog.Switch->IsChecked())
+			Execute(git + _(" checkout ") + dialog.Name->GetValue(), _("Switching to new branch ..."));
+	}
 }
 
 void GitBlocks::DiffToIndex(wxCommandEvent &event)

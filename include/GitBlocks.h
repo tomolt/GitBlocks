@@ -128,7 +128,7 @@ private:
 	
 	void RegisterFunction(wxObjectEventFunction func, wxString label);
 	
-	void Execute(wxString &command, const wxString comment, wxString dir = wxEmptyString);
+	void Execute(wxString command, const wxString comment, wxString dir = wxEmptyString);
 	
 	void Init(wxCommandEvent &event);
 	void Clone(wxCommandEvent &event);
@@ -140,6 +140,8 @@ private:
 	void Push(wxCommandEvent &event);
 	void Pull(wxCommandEvent &event);
 	void Fetch(wxCommandEvent &event);
+	
+	void NewBranch(wxCommandEvent &event);
 	
 	void DiffToIndex(wxCommandEvent &event);
 	void Log(wxCommandEvent &event);
