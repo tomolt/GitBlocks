@@ -28,7 +28,7 @@
 					<Add option="-z defs" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="rm GitBlocks.zip GitBlocks.cbplugin" />
+					<Add after="rm -f GitBlocks.zip GitBlocks.cbplugin" />
 					<Add after="zip -j9 GitBlocks.zip manifest.xml" />
 					<Add after="zip -j9 GitBlocks.cbplugin GitBlocks.so GitBlocks.zip GitBlocks.png GitBlocks-off.png" />
 				</ExtraCommands>
