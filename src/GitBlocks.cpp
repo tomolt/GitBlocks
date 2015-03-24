@@ -140,14 +140,11 @@ void GitBlocks::Clone(wxCommandEvent &event)
 
 void GitBlocks::Destroy(wxCommandEvent &event)
 {
-	if(wxMessageBox(_("Are you sure you want to destroy the repository?"), _("Destroy repository"), wxYES_NO) == wxYES)
+	if(wxMessageBox(_("Are you sure you want to destroy the local repository?"), _("Destroy local repository"), wxYES_NO) == wxYES)
 	{
-#ifdef __WXMSW__ // Fucking hipster Windows needs some extra code
-		wxString command = _("RD /S .git");
-#else
-		wxString command = _("rm -r .git");
-#endif
-		Execute(command, _("Destroying the repository ..."));
+		Manager::Get()->GetLogManager()->Log(_("Destroying the local repository ..."), logSlot);
+		Manager::Get()->GetLogManager()->Log(_("<rmdir> .git"), logSlot);
+		wxRmdir(wxGetCwd() + _("/.git"));
 	}
 }
 
@@ -189,7 +186,7 @@ void GitBlocks::CommitAll(wxCommandEvent &event)
 
 void GitBlocks::Push(wxCommandEvent &event)
 {
-#ifdef __WXMSW__ // Fucking hipster Windows needs some extra code
+#ifdef __WXMSW__ // Windows needs some extra code
 	wxString command = _("cmd.exe /C \"") + git + _(" push origin master\"");
 #else
 	wxString command = _("xterm -e \"") + git + _(" push origin HEAD\"");
@@ -199,7 +196,7 @@ void GitBlocks::Push(wxCommandEvent &event)
 
 void GitBlocks::Pull(wxCommandEvent &event)
 {
-#ifdef __WXMSW__ // Fucking hipster Windows needs some extra code
+#ifdef __WXMSW__ // Windows needs some extra code
 	wxString command = _("cmd.exe /C \"") + git + _(" pull origin\"");
 #else
 	wxString command = _("xterm -e \"") + git + _(" pull origin\"");
@@ -209,7 +206,7 @@ void GitBlocks::Pull(wxCommandEvent &event)
 
 void GitBlocks::Fetch(wxCommandEvent &event)
 {
-#ifdef __WXMSW__ // Fucking hipster Windows needs some extra code
+#ifdef __WXMSW__ // Windows needs some extra code
 	wxString command = _("cmd.exe /C \"") + git + _(" fetch origin\"");
 #else
 	wxString command = _("xterm -e \"") + git + _(" fetch origin\"");
