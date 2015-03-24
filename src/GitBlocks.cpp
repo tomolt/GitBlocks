@@ -22,7 +22,7 @@
 // We are using an anonymous namespace so we don't litter the global one.
 namespace
 {
-PluginRegistrant<GitBlocks> reg(_("GitBlocks"));
+PluginRegistrant<GitBlocks> reg(_T("GitBlocks"));
 }
 
 
@@ -34,9 +34,9 @@ GitBlocks::GitBlocks()
 {
 #if 0
 	// Make sure our resources are available.
-	if(!Manager::LoadResource(_("GitBlocks.zip")))
+	if(!Manager::LoadResource(_T("GitBlocks.zip")))
 	{
-		NotifyMissingFile(_("GitBlocks.zip"));
+		NotifyMissingFile(_T("GitBlocks.zip"));
 	}
 #endif
 }
@@ -48,11 +48,11 @@ GitBlocks::~GitBlocks()
 
 void GitBlocks::OnAttach()
 {
-	git = _("git");
+	git = _T("git");
 	
 	Logger *gitBlocksLogger = new TextCtrlLogger();
 	logSlot = Manager::Get()->GetLogManager()->SetLog(gitBlocksLogger);
-	Manager::Get()->GetLogManager()->Slot(logSlot).title = _("GitBlocks");
+	Manager::Get()->GetLogManager()->Slot(logSlot).title = _T("GitBlocks");
 	CodeBlocksLogEvent evtAdd1(cbEVT_ADD_LOG_WINDOW, gitBlocksLogger, Manager::Get()->GetLogManager()->Slot(logSlot).title);
 	Manager::Get()->ProcessEvent(evtAdd1);
 }
@@ -125,7 +125,7 @@ void GitBlocks::Execute(wxString command, const wxString comment, wxString dir)
 
 void GitBlocks::Init(wxCommandEvent &event)
 {
-	Execute(git + _(" init"), _("Creating an empty git repository ..."));
+	Execute(git + _T(" init"), _("Creating an empty git repository ..."));
 }
 
 void GitBlocks::Clone(wxCommandEvent &event)
@@ -133,7 +133,7 @@ void GitBlocks::Clone(wxCommandEvent &event)
 	CloneDialog dialog(Manager::Get()->GetAppWindow());
 	if(dialog.ShowModal() == wxID_OK)
 	{
-		wxString command = git + _(" clone ") + dialog.Origin->GetValue();
+		wxString command = git + _T(" clone ") + dialog.Origin->GetValue();
 		Execute(command, _("Cloning repository ..."), dialog.Directory->GetValue());
 	}
 }
@@ -143,8 +143,8 @@ void GitBlocks::Destroy(wxCommandEvent &event)
 	if(wxMessageBox(_("Are you sure you want to destroy the local repository?"), _("Destroy local repository"), wxYES_NO) == wxYES)
 	{
 		Manager::Get()->GetLogManager()->Log(_("Destroying the local repository ..."), logSlot);
-		Manager::Get()->GetLogManager()->Log(_("<rmdir> .git"), logSlot);
-		wxRmdir(wxGetCwd() + _("/.git"));
+		Manager::Get()->GetLogManager()->Log(_T("<rmdir> .git"), logSlot);
+		wxRmdir(wxGetCwd() + _T("/.git"));
 	}
 }
 
@@ -155,13 +155,13 @@ void GitBlocks::Commit(wxCommandEvent &event)
 	{
 		wxString command;
 		
-		command = git + _(" add");
+		command = git + _T(" add");
 		for(unsigned int i = 0; i < dialog.FileChoice->GetCount(); i++)
 			if(dialog.FileChoice->IsChecked(i))
-				command += _(" ") + dialog.FileChoice->GetString(i);
+				command += _T(" ") + dialog.FileChoice->GetString(i);
 		Execute(command, _("Adding files ..."));
 		
-		command = git + _(" commit -m \"") + dialog.Comment->GetValue() + _("\"");
+		command = git + _T(" commit -m \"") + dialog.Comment->GetValue() + _T("\"");
 		Execute(command, _("Committing ..."));
 	}
 }
@@ -174,12 +174,12 @@ void GitBlocks::CommitAll(wxCommandEvent &event)
 		wxString command;
 		cbProject *project = Manager::Get()->GetProjectManager()->GetActiveProject();
 		
-		command = git + _(" add");
+		command = git + _T(" add");
 		for(unsigned int i=0;i<project->GetFilesCount();i++)
-			command += _(" ") + project->GetFile(i)->relativeFilename;
+			command += _T(" ") + project->GetFile(i)->relativeFilename;
 		Execute(command, _("Adding files ..."));
 		
-		command = git + _(" commit -m \"") + dialog.Comment->GetValue() + _("\"");
+		command = git + _T(" commit -m \"") + dialog.Comment->GetValue() + _T("\"");
 		Execute(command, _("Committing ..."));
 	}
 }
@@ -187,9 +187,9 @@ void GitBlocks::CommitAll(wxCommandEvent &event)
 void GitBlocks::Push(wxCommandEvent &event)
 {
 #ifdef __WXMSW__ // Windows needs some extra code
-	wxString command = _("cmd.exe /C \"") + git + _(" push origin master\"");
+	wxString command = _T("cmd.exe /C \"") + git + _T(" push origin master\"");
 #else
-	wxString command = _("xterm -e \"") + git + _(" push origin HEAD\"");
+	wxString command = _T("xterm -e \"") + git + _T(" push origin HEAD\"");
 #endif
 	Execute(command, _("Pushing HEAD to origin ..."));
 }
@@ -197,9 +197,9 @@ void GitBlocks::Push(wxCommandEvent &event)
 void GitBlocks::Pull(wxCommandEvent &event)
 {
 #ifdef __WXMSW__ // Windows needs some extra code
-	wxString command = _("cmd.exe /C \"") + git + _(" pull origin\"");
+	wxString command = _T("cmd.exe /C \"") + git + _T(" pull origin\"");
 #else
-	wxString command = _("xterm -e \"") + git + _(" pull origin\"");
+	wxString command = _T("xterm -e \"") + git + _T(" pull origin\"");
 #endif
 	Execute(command, _("Pulling from origin ..."));
 }
@@ -207,9 +207,9 @@ void GitBlocks::Pull(wxCommandEvent &event)
 void GitBlocks::Fetch(wxCommandEvent &event)
 {
 #ifdef __WXMSW__ // Windows needs some extra code
-	wxString command = _("cmd.exe /C \"") + git + _(" fetch origin\"");
+	wxString command = _T("cmd.exe /C \"") + git + _T(" fetch origin\"");
 #else
-	wxString command = _("xterm -e \"") + git + _(" fetch origin\"");
+	wxString command = _T("xterm -e \"") + git + _T(" fetch origin\"");
 #endif
 	Execute(command, _("Fetching from origin ..."));
 }
@@ -219,9 +219,9 @@ void GitBlocks::NewBranch(wxCommandEvent &event)
 	NewBranchDialog dialog(Manager::Get()->GetAppWindow());
 	if(dialog.ShowModal() == wxID_OK)
 	{
-		Execute(git + _(" branch ") + dialog.Name->GetValue(), _("Adding new branch ..."));
+		Execute(git + _T(" branch ") + dialog.Name->GetValue(), _("Adding new branch ..."));
 		if(dialog.Switch->IsChecked())
-			Execute(git + _(" checkout ") + dialog.Name->GetValue(), _("Switching to new branch ..."));
+			Execute(git + _T(" checkout ") + dialog.Name->GetValue(), _("Switching to new branch ..."));
 	}
 }
 
@@ -229,12 +229,12 @@ void GitBlocks::SwitchBranch(wxCommandEvent &event)
 {
 	SwitchBranchDialog dialog(Manager::Get()->GetAppWindow());
 	if(dialog.ShowModal() == wxID_OK)
-		Execute(git + _(" checkout ") + dialog.Name->GetValue(), _("Switching branch ..."));
+		Execute(git + _T(" checkout ") + dialog.Name->GetValue(), _("Switching branch ..."));
 }
 
 void GitBlocks::DiffToIndex(wxCommandEvent &event)
 {
-	wxString command = git + _(" diff");
+	wxString command = git + _T(" diff");
 	wxString comment = _("Fetching diff to index ...");
 	wxString dir = Manager::Get()->GetProjectManager()->GetActiveProject()->GetBasePath();
 	
@@ -252,14 +252,14 @@ void GitBlocks::DiffToIndex(wxCommandEvent &event)
 	cbStyledTextCtrl *ctrl = editor->GetControl();
 	
 	for(unsigned int i=0;i<output.size();i++)
-		ctrl->AppendText(output[i] + _("\n"));
+		ctrl->AppendText(output[i] + _T("\n"));
 	
 	editor->SetModified(false);
 }
 
 void GitBlocks::Log(wxCommandEvent &event)
 {
-	wxString command = git + _(" log --pretty=format:%h%x09%an%x09%ad%x09%s");
+	wxString command = git + _T(" log --pretty=format:%h%x09%an%x09%ad%x09%s");
 	wxString comment = _("Fetching log ...");
 	wxString dir = Manager::Get()->GetProjectManager()->GetActiveProject()->GetBasePath();
 	
@@ -277,14 +277,14 @@ void GitBlocks::Log(wxCommandEvent &event)
 	cbStyledTextCtrl *ctrl = editor->GetControl();
 	
 	for(unsigned int i=0;i<output.size();i++)
-		ctrl->AppendText(output[i] + _("\n"));
+		ctrl->AppendText(output[i] + _T("\n"));
 	
 	editor->SetModified(false);
 }
 
 void GitBlocks::Status(wxCommandEvent &event)
 {
-	wxString command = git + _(" status");
+	wxString command = git + _T(" status");
 	wxString comment = _("Fetching status ...");
 	wxString dir = Manager::Get()->GetProjectManager()->GetActiveProject()->GetBasePath();
 	
@@ -302,7 +302,7 @@ void GitBlocks::Status(wxCommandEvent &event)
 	cbStyledTextCtrl *ctrl = editor->GetControl();
 	
 	for(unsigned int i=0;i<output.size();i++)
-		ctrl->AppendText(output[i] + _("\n"));
+		ctrl->AppendText(output[i] + _T("\n"));
 	
 	editor->SetModified(false);
 }
