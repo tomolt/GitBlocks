@@ -15,6 +15,7 @@
 #include "CommitDialog.h"
 #include "CommitAllDialog.h"
 #include "CloneDialog.h"
+#include "RemoveDialog.h"
 #include "NewBranchDialog.h"
 #include "SwitchBranchDialog.h"
 
@@ -93,6 +94,8 @@ void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 	RegisterFunction(wxCommandEventHandler(GitBlocks::Push), _("Push to origin"));
 	RegisterFunction(wxCommandEventHandler(GitBlocks::Pull), _("Pull from origin"));
 	RegisterFunction(wxCommandEventHandler(GitBlocks::Fetch), _("Fetch from origin"));
+	menu->AppendSeparator();
+	RegisterFunction(wxCommandEventHandler(GitBlocks::Remove), _("Remove file"));
 	menu->AppendSeparator();
 	RegisterFunction(wxCommandEventHandler(GitBlocks::NewBranch), _("Add new branch"));
 	RegisterFunction(wxCommandEventHandler(GitBlocks::SwitchBranch), _("Switch branch"));
@@ -175,6 +178,7 @@ void GitBlocks::CommitAll(wxCommandEvent &event)
 		cbProject *project = Manager::Get()->GetProjectManager()->GetActiveProject();
 		
 		command = git + _T(" add");
+		command += _T(" ") + project->GetFilename();
 		for(unsigned int i=0;i<project->GetFilesCount();i++)
 			command += _T(" ") + project->GetFile(i)->relativeFilename;
 		Execute(command, _("Adding files ..."));
@@ -187,7 +191,7 @@ void GitBlocks::CommitAll(wxCommandEvent &event)
 void GitBlocks::Push(wxCommandEvent &event)
 {
 #ifdef __WXMSW__ // Windows needs some extra code
-	wxString command = _T("cmd.exe /C \"") + git + _T(" push origin master\"");
+	wxString command = _T("cmd.exe /C \"") + git + _T(" push origin HEAD\"");
 #else
 	wxString command = _T("xterm -e \"") + git + _T(" push origin HEAD\"");
 #endif
@@ -212,6 +216,26 @@ void GitBlocks::Fetch(wxCommandEvent &event)
 	wxString command = _T("xterm -e \"") + git + _T(" fetch origin\"");
 #endif
 	Execute(command, _("Fetching from origin ..."));
+}
+
+void GitBlocks::Remove(wxCommandEvent &event)
+{
+	RemoveDialog dialog(Manager::Get()->GetAppWindow());
+	if(dialog.ShowModal() == wxID_OK)
+	{
+		wxString filename = dialog.FileChoice->GetString(dialog.FileChoice->GetCurrentSelection());
+		cbProject *project = Manager::Get()->GetProjectManager()->GetActiveProject();
+		ProjectFile *file = project->GetFile(dialog.FileChoice->GetCurrentSelection());
+		if(file == NULL)
+			return;
+		project->BeginRemoveFiles();
+		project->RemoveFile(file);
+		project->EndRemoveFiles();
+		if(filename.empty())
+			return;
+		Execute(git + _T(" rm ") + filename, _("Removing file ..."));
+		Manager::Get()->GetProjectManager()->GetUI().RebuildTree();
+	}
 }
 
 void GitBlocks::NewBranch(wxCommandEvent &event)

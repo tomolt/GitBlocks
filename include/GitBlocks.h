@@ -141,6 +141,8 @@ private:
 	void Pull(wxCommandEvent &event);
 	void Fetch(wxCommandEvent &event);
 	
+	void Remove(wxCommandEvent &event);
+	
 	void NewBranch(wxCommandEvent &event);
 	void SwitchBranch(wxCommandEvent &event);
 	

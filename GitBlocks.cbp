@@ -27,18 +27,23 @@
 					<Add option="`wx-config --version=2.8 --libs`" />
 					<Add option="-z defs" />
 				</Linker>
-				<ExtraCommands>
-					<Add after="rm -f GitBlocks.zip GitBlocks.cbplugin" />
-					<Add after="zip -j9 GitBlocks.zip manifest.xml" />
-					<Add after="zip -j9 GitBlocks.cbplugin GitBlocks.so GitBlocks.zip" />
-				</ExtraCommands>
 			</Target>
 		</Build>
+		<Unit filename="AUTHORS" />
+		<Unit filename="COPYING" />
+		<Unit filename="ChangeLog" />
+		<Unit filename="INSTALL" />
+		<Unit filename="Makefile.am" />
+		<Unit filename="bootstrap" />
+		<Unit filename="config.h.in" />
+		<Unit filename="configure" />
+		<Unit filename="configure.ac" />
 		<Unit filename="include/CloneDialog.h" />
 		<Unit filename="include/CommitAllDialog.h" />
 		<Unit filename="include/CommitDialog.h" />
 		<Unit filename="include/GitBlocks.h" />
 		<Unit filename="include/NewBranchDialog.h" />
+		<Unit filename="include/RemoveDialog.h" />
 		<Unit filename="include/SwitchBranchDialog.h" />
 		<Unit filename="manifest.xml" />
 		<Unit filename="src/CloneDialog.cpp" />
@@ -46,6 +51,7 @@
 		<Unit filename="src/CommitDialog.cpp" />
 		<Unit filename="src/GitBlocks.cpp" />
 		<Unit filename="src/NewBranchDialog.cpp" />
+		<Unit filename="src/RemoveDialog.cpp" />
 		<Unit filename="src/SwitchBranchDialog.cpp" />
 		<Unit filename="wxsmith/CloneDialog.wxs" />
 		<Unit filename="wxsmith/CommitAllDialog.wxs" />
