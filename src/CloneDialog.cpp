@@ -69,7 +69,7 @@ CloneDialog::~CloneDialog()
 
 void CloneDialog::OnButton1Click(wxCommandEvent& event)
 {
-	wxDirDialog dialog(NULL, _("Choose clone directory ..."), wxEmptyString, wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
+	wxDirDialog dialog(this, _("Choose clone directory ..."), wxEmptyString, wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
 	if(dialog.ShowModal() == wxID_OK)
 	{
 		Directory->SetValue(dialog.GetPath());

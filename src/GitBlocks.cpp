@@ -33,13 +33,11 @@ END_EVENT_TABLE()
 // constructor
 GitBlocks::GitBlocks()
 {
-#if 0
 	// Make sure our resources are available.
 	if(!Manager::LoadResource(_T("GitBlocks.zip")))
 	{
 		NotifyMissingFile(_T("GitBlocks.zip"));
 	}
-#endif
 }
 
 // destructor
@@ -126,6 +124,16 @@ void GitBlocks::Execute(wxString command, const wxString comment, wxString dir)
 		Manager::Get()->GetLogManager()->Log(output[i], logSlot);
 }
 
+void GitBlocks::ExecuteInTerminal(wxString command, const wxString comment, wxString dir)
+{
+#ifdef __WXMSW__ // Windows needs some extra code
+	wxString newcmd = _T("cmd.exe /C \"") + command + _T("\"");
+#else
+	wxString newcmd = _T( "xterm -e \"" ) + command + _T("\"");
+#endif
+	Execute(newcmd, comment, dir);
+}
+
 void GitBlocks::Init(wxCommandEvent &event)
 {
 	Execute(git + _T(" init"), _("Creating an empty git repository ..."));
@@ -137,7 +145,20 @@ void GitBlocks::Clone(wxCommandEvent &event)
 	if(dialog.ShowModal() == wxID_OK)
 	{
 		wxString command = git + _T(" clone ") + dialog.Origin->GetValue();
-		Execute(command, _("Cloning repository ..."), dialog.Directory->GetValue());
+		ExecuteInTerminal(command, _("Cloning repository ..."), dialog.Directory->GetValue());
+		
+		wxFileDialog pdialog(Manager::Get()->GetAppWindow(), _("Open cloned project ..."), dialog.Directory->GetValue(), wxEmptyString, _("*.cbp;*.workspace"), wxFD_OPEN);
+		if(pdialog.ShowModal() == wxID_OK)
+		{
+			if(pdialog.GetPath().EndsWith(_(".cbp")))
+			{
+				Manager::Get()->GetProjectManager()->LoadProject(pdialog.GetPath(), true);
+			}
+			else if(pdialog.GetPath().EndsWith(_(".workspace")))
+			{
+				Manager::Get()->GetProjectManager()->LoadWorkspace(pdialog.GetPath());
+			}
+		}
 	}
 }
 
@@ -190,32 +211,17 @@ void GitBlocks::CommitAll(wxCommandEvent &event)
 
 void GitBlocks::Push(wxCommandEvent &event)
 {
-#ifdef __WXMSW__ // Windows needs some extra code
-	wxString command = _T("cmd.exe /C \"") + git + _T(" push origin HEAD\"");
-#else
-	wxString command = _T("xterm -e \"") + git + _T(" push origin HEAD\"");
-#endif
-	Execute(command, _("Pushing HEAD to origin ..."));
+	ExecuteInTerminal(git + _T(" push origin HEAD"), _("Pushing HEAD to origin ..."));
 }
 
 void GitBlocks::Pull(wxCommandEvent &event)
 {
-#ifdef __WXMSW__ // Windows needs some extra code
-	wxString command = _T("cmd.exe /C \"") + git + _T(" pull origin\"");
-#else
-	wxString command = _T("xterm -e \"") + git + _T(" pull origin\"");
-#endif
-	Execute(command, _("Pulling from origin ..."));
+	ExecuteInTerminal(git + _T(" pull origin"), _("Pulling from origin ..."));
 }
 
 void GitBlocks::Fetch(wxCommandEvent &event)
 {
-#ifdef __WXMSW__ // Windows needs some extra code
-	wxString command = _T("cmd.exe /C \"") + git + _T(" fetch origin\"");
-#else
-	wxString command = _T("xterm -e \"") + git + _T(" fetch origin\"");
-#endif
-	Execute(command, _("Fetching from origin ..."));
+	ExecuteInTerminal(git + _T(" fetch origin"), _("Fetching from origin ..."));
 }
 
 void GitBlocks::Remove(wxCommandEvent &event)
