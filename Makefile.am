@@ -1,8 +1,8 @@
 # ---------- Declarations ---------- #
 
 cb_plugin_lib_LTLIBRARIES = GitBlocks.la
-cb_plugin_data_DATA = GitBlocks.zip
-CLEANFILES = GitBlocks.zip
+cb_plugin_data_DATA = GitBlocks.zip GitBlocks.cbplugin
+CLEANFILES = GitBlocks.zip GitBlocks.cbplugin
 
 
 # ---------- GitBlocks.so ---------- #
@@ -32,4 +32,14 @@ GitBlocks_la_LDFLAGS = -shared -module -avoid-version -no-undefined $(WX_LIBS) $
 GitBlocks_zip_RESOURCES = manifest.xml
 
 GitBlocks.zip: $(GitBlocks_zip_RESOURCES)
-	PWD=`pwd` cd $(srcdir) && zip -R $(PWD)/GitBlocks.zip manifest.xml
+	cd $(srcdir)
+	zip -j9 GitBlocks.zip manifest.xml
+
+# ---------- GitBlocks.cbplugin ---------- #
+
+GitBlocks_cbplugin_RESOURCES = $(cb_plugin_lib_LTLIBRARIES) GitBlocks.zip
+
+GitBlocks.cbplugin: $(GitBlocks_cbplugin_RESOURCES)
+	cd $(srcdir)
+	zip -j9 GitBlocks.cbplugin .libs/GitBlocks.so GitBlocks.zip
+
