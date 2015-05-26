@@ -1,0 +1,23 @@
+Version 0.7.4:
+ - Cloning an existing repository asks now for opening a *.cbp / *.workspace file in it
+ - You can now clone password-protected repositories
+ - Some internal changes (like ExecuteInTerminal(...) etc.)
+ - Fixed some stuff again ...
+
+Version 0.7.3:
+ - Added removing files
+ - Fixed some potential bugs ...
+
+Version 0.7.0:
+ - Added 'Add new branch'
+ - Added 'Switch to branch'
+ - 'Push to origin' pushes now HEAD instead of master
+ - Removed config (was pretty useless)
+ - Structurized to code a bit more
+
+Version 0.6.4:
+ - Switched to autotools as default build system
+ - Fixed the UI layout
+
+Version 0.4.3:
+...
