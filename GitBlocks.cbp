@@ -37,6 +37,7 @@
 		<Unit filename="NEWS" />
 		<Unit filename="README" />
 		<Unit filename="bootstrap" />
+		<Unit filename="config.h.in" />
 		<Unit filename="configure.ac" />
 		<Unit filename="include/CloneDialog.h" />
 		<Unit filename="include/CommitAllDialog.h" />
