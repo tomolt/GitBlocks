@@ -34,9 +34,9 @@
 		<Unit filename="ChangeLog" />
 		<Unit filename="INSTALL" />
 		<Unit filename="Makefile.am" />
+		<Unit filename="NEWS" />
+		<Unit filename="README" />
 		<Unit filename="bootstrap" />
-		<Unit filename="config.h.in" />
-		<Unit filename="configure" />
 		<Unit filename="configure.ac" />
 		<Unit filename="include/CloneDialog.h" />
 		<Unit filename="include/CommitAllDialog.h" />
