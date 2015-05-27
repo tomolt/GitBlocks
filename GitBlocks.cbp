@@ -62,6 +62,7 @@
 		<Unit filename="wxsmith/NewBranchDialog.wxs" />
 		<Unit filename="wxsmith/RemoveDialog.wxs" />
 		<Unit filename="wxsmith/RenameDialog.wxs" />
+		<Unit filename="wxsmith/SwitchBranchDialog.wxs" />
 		<Extensions>
 			<envvars />
 			<code_completion />
@@ -74,6 +75,7 @@
 					<wxDialog wxs="wxsmith/NewBranchDialog.wxs" src="src/NewBranchDialog.cpp" hdr="include/NewBranchDialog.h" fwddecl="0" i18n="1" name="NewBranchDialog" language="CPP" />
 					<wxDialog wxs="wxsmith/RemoveDialog.wxs" src="src/RemoveDialog.cpp" hdr="include/RemoveDialog.h" fwddecl="0" i18n="1" name="RemoveDialog" language="CPP" />
 					<wxDialog wxs="wxsmith/RenameDialog.wxs" src="src/RenameDialog.cpp" hdr="include/RenameDialog.h" fwddecl="0" i18n="1" name="RenameDialog" language="CPP" />
+					<wxDialog wxs="wxsmith/SwitchBranchDialog.wxs" src="src/SwitchBranchDialog.cpp" hdr="include/SwitchBranchDialog.h" fwddecl="0" i18n="1" name="SwitchBranchDialog" language="CPP" />
 				</resources>
 			</wxsmith>
 			<lib_finder disable_auto="1" />

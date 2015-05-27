@@ -5,7 +5,7 @@
 #include <wx/dialog.h>
 #include <wx/sizer.h>
 #include <wx/stattext.h>
-#include <wx/textctrl.h>
+#include <wx/choice.h>
 //*)
 
 class SwitchBranchDialog: public wxDialog
@@ -17,14 +17,14 @@ class SwitchBranchDialog: public wxDialog
 
 		//(*Declarations(SwitchBranchDialog)
 		wxStaticText* StaticText1;
-		wxTextCtrl* Name;
+		wxChoice* BranchChoice;
 		//*)
 
 	protected:
 
 		//(*Identifiers(SwitchBranchDialog)
 		static const long ID_STATICTEXT1;
-		static const long ID_NAME;
+		static const long ID_CHOICE1;
 		//*)
 
 	private:
