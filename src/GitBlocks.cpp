@@ -105,35 +105,6 @@ void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 	menuBar->Insert(menuBar->FindMenu(_("&Tools")) + 1, menu, wxT("&GitBlocks"));
 }
 
-void GitBlocks::Execute(wxString command, const wxString comment, wxString dir)
-{
-	if(dir.empty())
-		dir = Manager::Get()->GetProjectManager()->GetActiveProject()->GetBasePath();
-	
-	wxArrayString output;
-	
-	Manager::Get()->GetLogManager()->Log(comment, logSlot);
-	Manager::Get()->GetLogManager()->Log(command, logSlot);
-	
-	wxString ocwd = wxGetCwd();
-	wxSetWorkingDirectory(dir);
-	wxExecute(command, output);
-	wxSetWorkingDirectory(ocwd);
-	
-	for(unsigned int i=0;i<output.size();i++)
-		Manager::Get()->GetLogManager()->Log(output[i], logSlot);
-}
-
-void GitBlocks::ExecuteInTerminal(wxString command, const wxString comment, wxString dir)
-{
-#ifdef __WXMSW__ // Windows needs some extra code
-	wxString newcmd = _T("cmd.exe /C \"") + command + _T("\"");
-#else
-	wxString newcmd = _T( "xterm -e \"" ) + command + _T("\"");
-#endif
-	Execute(newcmd, comment, dir);
-}
-
 wxArrayString GitBlocks::ListBranches()
 {
 	wxString dir = Manager::Get()->GetProjectManager()->GetActiveProject()->GetBasePath();
