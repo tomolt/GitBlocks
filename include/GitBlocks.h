@@ -18,6 +18,8 @@
 
 #include <cbplugin.h> // for "class cbPlugin"
 
+#include <git2.h>
+
 class GitBlocks : public cbPlugin
 {
 public:
@@ -93,9 +95,6 @@ public:
 	*/
 	virtual bool BuildToolBar(wxToolBar* toolBar) { return false; }
 	
-	wxString GetGit() { return git; }
-	void SetGit(wxString pgit) { git = pgit; }
-	
 protected:
 	/** Any descendent plugin should override this virtual method and
 	* perform any necessary initialization. This method is called by
@@ -124,12 +123,11 @@ private:
 	int logSlot;
 	wxMenu *menu;
 	
-	wxString git;
+	std::map<wxString, git_repository*> repos;
 	
 	void RegisterFunction(wxObjectEventFunction func, wxString label);
 	
-	void Execute(wxString command, const wxString comment, wxString dir = wxEmptyString);
-	void ExecuteInTerminal(wxString command, const wxString comment, wxString dir = wxEmptyString);
+	wxString GetCPD();
 	
 	wxArrayString ListBranches();
 	

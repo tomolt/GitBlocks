@@ -25,7 +25,7 @@ noinst_HEADERS = include/CloneDialog.h \
 
 GitBlocks_la_CPPFLAGS = -ansi $(WX_CFLAGS) $(CB_CFLAGS) -Iinclude
 
-GitBlocks_la_LDFLAGS = -shared -module -avoid-version -no-undefined $(WX_LIBS) $(CB_LIBS)
+GitBlocks_la_LDFLAGS = -shared -module -avoid-version -no-undefined $(WX_LIBS) $(CB_LIBS) -lgit2
 
 # ---------- GitBlocks.zip ---------- #
 

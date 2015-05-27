@@ -15,6 +15,7 @@
 #include "CommitDialog.h"
 #include "CommitAllDialog.h"
 #include "CloneDialog.h"
+#include "CredentialsDialog.h"
 #include "RemoveDialog.h"
 #include "NewBranchDialog.h"
 #include "SwitchBranchDialog.h"
@@ -47,17 +48,19 @@ GitBlocks::~GitBlocks()
 
 void GitBlocks::OnAttach()
 {
-	git = _T("git");
-	
 	Logger *gitBlocksLogger = new TextCtrlLogger();
 	logSlot = Manager::Get()->GetLogManager()->SetLog(gitBlocksLogger);
 	Manager::Get()->GetLogManager()->Slot(logSlot).title = _T("GitBlocks");
 	CodeBlocksLogEvent evtAdd1(cbEVT_ADD_LOG_WINDOW, gitBlocksLogger, Manager::Get()->GetLogManager()->Slot(logSlot).title);
 	Manager::Get()->ProcessEvent(evtAdd1);
+	
+	git_libgit2_init();
 }
 
 void GitBlocks::OnRelease(bool appShutDown)
 {
+	git_libgit2_shutdown();
+	
 	Manager::Get()->GetLogManager()->DeleteLog(logSlot);
 }
 
@@ -105,26 +108,40 @@ void GitBlocks::BuildMenu(wxMenuBar* menuBar)
 	menuBar->Insert(menuBar->FindMenu(_("&Tools")) + 1, menu, wxT("&GitBlocks"));
 }
 
+wxString GitBlocks::GetCPD()
+{
+	return Manager::Get()->GetProjectManager()->GetActiveProject()->GetBasePath();
+}
+
+int AcquireCredentials(git_cred **cred, const char *url, const char *username_from_url, unsigned int allowed_types, void *payload)
+{
+	if(allowed_types & GIT_CREDTYPE_USERPASS_PLAINTEXT)
+	{
+		CredentialsDialog dialog(Manager::Get()->GetAppWindow());
+		if(dialog.ShowModal() == wxID_OK)
+		{
+			git_cred_userpass_plaintext_new(cred, dialog.Username->GetValue().ToUTF8().data(), dialog.Password->GetValue().ToUTF8().data());
+			return 0;
+		}
+		else
+			return 1;
+	}
+	else
+		return -1;
+}
+
 wxArrayString GitBlocks::ListBranches()
 {
-	wxString dir = Manager::Get()->GetProjectManager()->GetActiveProject()->GetBasePath();
-	
 	wxArrayString output;
-	
-	wxString ocwd = wxGetCwd();
-	wxSetWorkingDirectory(dir);
-	wxExecute(git + _T(" branch"), output);
-	wxSetWorkingDirectory(ocwd);
-	
-	for(unsigned int i=0;i<output.size();i++)
-		output[i] = output[i].Mid(2);
-	
+	// Currently broken.
 	return output;
 }
 
 void GitBlocks::Init(wxCommandEvent &event)
 {
-	Execute(git + _T(" init"), _("Creating an empty git repository ..."));
+	git_repository *repo = NULL;
+	git_repository_init(&repo, GetCPD().ToUTF8().data(), 0);
+	repos.insert(std::pair<wxString, git_repository*>(GetCPD(), repo));
 }
 
 void GitBlocks::Clone(wxCommandEvent &event)
@@ -132,8 +149,10 @@ void GitBlocks::Clone(wxCommandEvent &event)
 	CloneDialog dialog(Manager::Get()->GetAppWindow());
 	if(dialog.ShowModal() == wxID_OK)
 	{
-		wxString command = git + _T(" clone ") + dialog.Origin->GetValue();
-		ExecuteInTerminal(command, _("Cloning repository ..."), dialog.Directory->GetValue());
+		git_repository *repo = NULL;
+		git_clone_options options = GIT_CLONE_OPTIONS_INIT;
+		options.remote_callbacks.credentials = AcquireCredentials;
+		git_clone(&repo, dialog.Origin->GetValue().ToUTF8().data(), dialog.Directory->GetValue().ToUTF8().data(), &options);
 		
 		wxFileDialog pdialog(Manager::Get()->GetAppWindow(), _("Open cloned project ..."), dialog.Directory->GetValue(), wxEmptyString, _("*.cbp;*.workspace"), wxFD_OPEN);
 		if(pdialog.ShowModal() == wxID_OK)
