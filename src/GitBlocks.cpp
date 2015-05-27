@@ -184,14 +184,16 @@ void GitBlocks::Commit(wxCommandEvent &event)
 	CommitDialog dialog(Manager::Get()->GetAppWindow());
 	if(dialog.ShowModal())
 	{
-		wxString command;
+		git_index *index = NULL;
+		git_repository_index(&index, repos[GetCPD()]);
 		
-		command = git + _T(" add");
 		for(unsigned int i = 0; i < dialog.FileChoice->GetCount(); i++)
 			if(dialog.FileChoice->IsChecked(i))
-				command += _T(" ") + dialog.FileChoice->GetString(i);
-		Execute(command, _("Adding files ..."));
+				git_index_add_bypath(index, dialog.FileChoice->GetString(i).ToUTF8().data());
 		
+		git_oid id;
+		git_commit_create(&oid, repo, , , , "UTF-8", dialog.Comment->GetValue().ToUTF8().data(), , , );
+		git_index_
 		command = git + _T(" commit -m \"") + dialog.Comment->GetValue() + _T("\"");
 		Execute(command, _("Committing ..."));
 	}
