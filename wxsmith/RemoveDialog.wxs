@@ -16,7 +16,7 @@
 						<option>1</option>
 					</object>
 					<object class="sizeritem">
-						<object class="wxChoice" name="ID_CHOICE1" variable="Choice1" member="yes" />
+						<object class="wxChoice" name="ID_CHOICE1" variable="FileChoice" member="yes" />
 						<flag>wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 						<border>5</border>
 						<option>1</option>

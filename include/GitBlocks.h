@@ -131,6 +131,8 @@ private:
 	void Execute(wxString command, const wxString comment, wxString dir = wxEmptyString);
 	void ExecuteInTerminal(wxString command, const wxString comment, wxString dir = wxEmptyString);
 	
+	wxArrayString ListBranches();
+	
 	void Init(wxCommandEvent &event);
 	void Clone(wxCommandEvent &event);
 	void Destroy(wxCommandEvent &event);

@@ -134,6 +134,23 @@ void GitBlocks::ExecuteInTerminal(wxString command, const wxString comment, wxSt
 	Execute(newcmd, comment, dir);
 }
 
+wxArrayString GitBlocks::ListBranches()
+{
+	wxString dir = Manager::Get()->GetProjectManager()->GetActiveProject()->GetBasePath();
+	
+	wxArrayString output;
+	
+	wxString ocwd = wxGetCwd();
+	wxSetWorkingDirectory(dir);
+	wxExecute(git + _T(" branch"), output);
+	wxSetWorkingDirectory(ocwd);
+	
+	for(unsigned int i=0;i<output.size();i++)
+		output[i] = output[i].Mid(2);
+	
+	return output;
+}
+
 void GitBlocks::Init(wxCommandEvent &event)
 {
 	Execute(git + _T(" init"), _("Creating an empty git repository ..."));
@@ -258,8 +275,13 @@ void GitBlocks::NewBranch(wxCommandEvent &event)
 void GitBlocks::SwitchBranch(wxCommandEvent &event)
 {
 	SwitchBranchDialog dialog(Manager::Get()->GetAppWindow());
+	
+	wxArrayString branches = ListBranches();
+	for(unsigned int i=0; i<branches.size(); i++)
+		dialog.BranchChoice->Append(branches[i]);
+	
 	if(dialog.ShowModal() == wxID_OK)
-		Execute(git + _T(" checkout ") + dialog.Name->GetValue(), _("Switching branch ..."));
+		Execute(git + _T(" checkout ") + branches[dialog.BranchChoice->GetSelection()], _("Switching branch ..."));
 }
 
 void GitBlocks::DiffToIndex(wxCommandEvent &event)
